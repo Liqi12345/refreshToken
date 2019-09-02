@@ -55,8 +55,7 @@ function mapArr(){	//重新发送请求
 	arr = []
 }
 
-let ar = [1,2,3,4,5]
-	
+let ar = [1,2,3,4,5]    //模拟请求	
 for(let i of ar){
 	get('https://www.easy-mock.com/mock/5d52485a4245803a2dd16054/getContentList',{id:i})
 }
