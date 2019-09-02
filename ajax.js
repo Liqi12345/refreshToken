@@ -2,7 +2,7 @@ localStorage.setItem('token',123)
 localStorage.setItem('refresh',456)
 let arr = [],isRefreshToken = true
 
-function get(url,params){
+function get(url,params){    //封装请求
 	let token = localStorage.getItem('token')
 	return axios.get(
 						url,
@@ -17,15 +17,7 @@ function get(url,params){
 				.catch(err=>{console.log(arr)})
 }
 
-
-
-	get('https://www.easy-mock.com/mock/5d52485a4245803a2dd16054/getContentList',{id:1})
-	get('https://www.easy-mock.com/mock/5d52485a4245803a2dd16054/getContentList',{id:2})
-	get('https://www.easy-mock.com/mock/5d52485a4245803a2dd16054/getContentList',{id:3})
-	get('https://www.easy-mock.com/mock/5d52485a4245803a2dd16054/getContentList',{id:4})
-	get('https://www.easy-mock.com/mock/5d52485a4245803a2dd16054/getContentList',{id:5})
-
-function checkToken(res){
+function checkToken(res){    //验证token是否失效
 	if(res.data.code == 1002){
 		if(isRefreshToken){
 			getRefreshToken()
@@ -43,7 +35,7 @@ function checkToken(res){
 	}
 }
 
-function getRefreshToken(){
+function getRefreshToken(){	   //获取新token
 	get('https://www.easy-mock.com/mock/5d52485a4245803a2dd16054/getToken').then(res=>{
 		localStorage.setItem('token',res.data.token)
 		localStorage.setItem('refresh',res.data.refresh)
@@ -52,13 +44,19 @@ function getRefreshToken(){
 	})
 }
 
-function addSubscribe(callabck){
+function addSubscribe(callabck){	//存接口数组
 	arr.push(callabck)
 }
 
-function mapArr(){
+function mapArr(){	//重新发送请求 
 	arr.map((e)=>{
 		e()
 	})
 	arr = []
+}
+
+let ar = [1,2,3,4,5]
+	
+for(let i of ar){
+	get('https://www.easy-mock.com/mock/5d52485a4245803a2dd16054/getContentList',{id:i})
 }
